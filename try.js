@@ -1,21 +1,18 @@
-const productExceptSelf = (nums) => {
-  let n = nums.length;
-  let results = Array(n).fill(1);
+const maxProfit = (prices) => {
+  let cheapestPrice = prices[0];
+  let maxProfit = 0;
 
-  let product = 1;
-
-  for (let i = 0; i < nums.length; i++) {
-    results[i] = results[i] * product;
-    product = product * nums[i];
-  }
-  product = 1;
-  for (let j = nums.length - 1; j >= 0; j--) {
-    results[j] = results[j] * product;
-    product = product * nums[j];
+  for (let i = 0; i < prices.length; i++) {
+    const price = prices[i];
+    if (price < cheapestPrice) {
+      cheapestPrice = price;
+    }
+    const currentProfit = price - cheapestPrice;
+    maxProfit = Math.max(currentProfit, maxProfit);
   }
 
-  return results;
+  return maxProfit;
 };
 
-console.log(productExceptSelf([1, 2, 3, 4]));
-console.log(productExceptSelf([-1, 1, 0, -3, 3]));
+console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+console.log(maxProfit([7, 6, 4, 3, 1]));

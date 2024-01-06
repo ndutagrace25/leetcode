@@ -26,22 +26,39 @@ Constraints:
 0 <= prices[i] <= 104
 */
 
-var maxProfit = function (prices) {
-  let buy = 0;
-  let sell = 1;
-  let max_profit = 0;
+// var maxProfit = function (prices) {
+//   let buy = 0;
+//   let sell = 1;
+//   let max_profit = 0;
 
-  while (sell < prices.length) {
-    if (prices[buy] < prices[sell]) {
-      let profit = prices[sell] - prices[buy];
-      max_profit = Math.max(max_profit, profit);
-    } else {
-      buy = sell;
+//   while (sell < prices.length) {
+//     if (prices[buy] < prices[sell]) {
+//       let profit = prices[sell] - prices[buy];
+//       max_profit = Math.max(max_profit, profit);
+//     } else {
+//       buy = sell;
+//     }
+//     sell++;
+//   }
+
+//   return max_profit;
+// };
+
+//solution 2
+const maxProfit = (prices) => {
+  let cheapestPrice = prices[0];
+  let maxProfit = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    const price = prices[i];
+    if (price < cheapestPrice) {
+      cheapestPrice = price;
     }
-    sell++;
+    const currentProfit = price - cheapestPrice;
+    maxProfit = Math.max(currentProfit, maxProfit);
   }
 
-  return max_profit;
+  return maxProfit;
 };
 
 console.log(maxProfit([7, 1, 5, 3, 6, 4]));
