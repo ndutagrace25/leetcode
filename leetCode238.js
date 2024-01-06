@@ -53,22 +53,45 @@ The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit int
 
 //   return result;
 // };
+
+//soulution 2
+// const productExceptSelf = (nums) => {
+//   const n = nums.length;
+//   let result = new Array(nums.length).fill(1);
+//   let startIndex = 0;
+//   let leftProduct = 1;
+//   let rightProduct = 1;
+
+//   while (startIndex < n) {
+//     result[startIndex] *= Math.abs(leftProduct);
+//     leftProduct *= nums[startIndex];
+
+//     result[n - startIndex - 1] *= Math.abs(rightProduct);
+//     rightProduct *= nums[n - startIndex - 1];
+//     startIndex++;
+//   }
+//   return result;
+// };
+
+
+//solution 3
 const productExceptSelf = (nums) => {
-  const n = nums.length;
-  let result = new Array(nums.length).fill(1);
-  let startIndex = 0;
-  let leftProduct = 1;
-  let rightProduct = 1;
+  let n = nums.length;
+  let results = Array(n).fill(1);
 
-  while (startIndex < n) {
-    result[startIndex] *= Math.abs(leftProduct);
-    leftProduct *= nums[startIndex];
+  let product = 1;
 
-    result[n - startIndex - 1] *= Math.abs(rightProduct);
-    rightProduct *= nums[n - startIndex - 1];
-    startIndex++;
+  for (let i = 0; i < nums.length; i++) {
+    results[i] = results[i] * product;
+    product = product * nums[i];
   }
-  return result;
+  product = 1;
+  for (let j = nums.length - 1; j >= 0; j--) {
+    results[j] = results[j] * product;
+    product = product * nums[j];
+  }
+
+  return results;
 };
 
 console.log(productExceptSelf([1, 2, 3, 4]));
